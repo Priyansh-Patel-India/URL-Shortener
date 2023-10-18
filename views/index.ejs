@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>URL Shortener</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+				font-family: "Montserrat", sans-serif;
+			}
+			body {
+				font-family: "Montserrat", sans-serif;
+				background-color: #2d2d2d;
+				margin: 0;
+				padding: 0;
+				color: #fff;
+			}
+
+			.main {
+				max-width: 800px;
+				margin: 50px auto;
+				background-color: #353535;
+				padding: 20px;
+				border-radius: 10px;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+			}
+
+			h1 {
+				color: #7ec8e3;
+				text-align: center;
+			}
+
+			form {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				margin-top: 20px;
+			}
+
+			label {
+				font-size: 1.2em;
+				margin-bottom: 10px;
+			}
+
+			input {
+				width: 100%;
+				padding: 10px;
+				margin-bottom: 20px;
+				font-size: 1em;
+				border: 1px solid #565656;
+				border-radius: 5px;
+				background-color: #2d2d2d;
+				color: #fff;
+			}
+
+			button {
+				background-color: rgb(75, 175, 80);
+				color: #fff;
+				padding: 10px 20px;
+				font-size: 1.2em;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+			}
+
+			button:hover {
+				background-color: rgb(35, 160, 40);
+			}
+
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				margin-top: 20px;
+			}
+
+			th,
+			td {
+				border: 1px solid #565656;
+				padding: 10px;
+				text-align: left;
+			}
+
+			th {
+				background-color: #7ec8e3;
+				color: #2d2d2d;
+			}
+
+			tbody tr:nth-child(even) {
+				background-color: #434343;
+			}
+
+			a {
+				color: #00e;
+				text-decoration: none;
+			}
+
+			a:hover {
+				text-decoration: underline;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="main">
+			<h1>URL SHORTENER</h1>
+			<form
+				method="post"
+				action="/url"
+			>
+				<label>Enter Original URL</label>
+				<input
+					type="text"
+					name="url"
+					placeholder="https://example.com"
+				/>
+				<button type="submit">GENERATE</button>
+			</form>
+
+			<div>
+				<% if (locals.urls && locals.urls.length > 0) { %>
+				<table>
+					<thead>
+						<th>Sr No</th>
+						<th>ShortID</th>
+						<th>Redirect</th>
+						<th>Clicks</th>
+					</thead>
+					<tbody>
+						<% urls.forEach((url, index) => { %>
+						<tr>
+							<td><%= index + 1 %></td>
+							<td><%= url.shortId %></td>
+							<td>
+								<a
+									href="http://localhost:8080/url/<%= url.shortId %>"
+									target="_blank"
+									><%= url.redirectURL %></a
+								>
+							</td>
+							<td><%= url.visitHistory.length %></td>
+						</tr>
+						<% }) %>
+					</tbody>
+				</table>
+				<% } %>
+			</div>
+		</div>
+	</body>
+</html>
